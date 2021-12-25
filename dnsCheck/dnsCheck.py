@@ -11,6 +11,8 @@ inputFile = open(args.input, 'r')
 outputFile = open(args.output, 'w')
 
 for subdomain in inputFile:
+    if subdomain == "": pass
+    
     try:
         answers = dns.resolver.resolve(subdomain, 'CNAME')
         for rdata in answers:
