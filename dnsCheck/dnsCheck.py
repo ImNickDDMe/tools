@@ -1,6 +1,5 @@
 import dns.resolver
 import argparse
-import os
 
 parser = argparse.ArgumentParser()
 
@@ -17,6 +16,6 @@ for subdomain in inputFile:
         for rdata in answers:
             outputFile.write(f"{subdomain}:{rdata}")
     except dns.resolver.NoAnswer:
-        pass
+        print(f"{subdomain}: No records")
 
 print('Done.')
