@@ -11,14 +11,11 @@ inputFile = open(args.input, 'r')
 outputFile = open(args.output, 'w')
 
 for subdomain in inputFile:
-    if subdomain == "": pass
-    
     try:
         answers = dns.resolver.resolve(subdomain, 'CNAME')
         for rdata in answers:
             outputFile.write(f"{subdomain}:{rdata}")
-            print(f"{subdomain}:{rdata}")
-    except dns.resolver.NXDOMAIN or dns.resolver.NoAnswer:
+    except dns.name.EmptyLabel or dns.resolver.NXDOMAIN or dns.resolver.NoAnswer:
         print(f"{subdomain}: No records.")
 
 print('Done.')
