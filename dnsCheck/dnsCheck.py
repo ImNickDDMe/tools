@@ -21,5 +21,7 @@ for subdomain in inputFile:
         print(f"{subdomain}: No records.")
     except dns.resolver.NoAnswer:
         print(f"{subdomain}: No records.")
+    except dns.exception.Timeout:
+        pass
 
 print('Done.')
