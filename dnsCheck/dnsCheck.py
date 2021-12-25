@@ -16,7 +16,7 @@ for subdomain in inputFile:
         for rdata in answers:
             outputFile.write(f"{subdomain}:{rdata}")
             print(f"{subdomain}:{rdata}")
-    except dns.resolver.NXDOMAIN:
+    except dns.resolver.NXDOMAIN or dns.resolver.NoAnswer:
         print(f"{subdomain}: No records.")
 
 print('Done.')
