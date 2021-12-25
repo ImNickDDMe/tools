@@ -15,7 +15,8 @@ for subdomain in inputFile:
         answers = dns.resolver.resolve(subdomain, 'CNAME')
         for rdata in answers:
             outputFile.write(f"{subdomain}:{rdata}")
+            print(f"{subdomain}:{rdata}")
     except dns.resolver.NoAnswer:
-        print(f"{subdomain}: No records")
+        print(f"{subdomain}: No records.")
 
 print('Done.')
