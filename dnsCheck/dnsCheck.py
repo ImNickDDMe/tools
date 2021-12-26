@@ -6,6 +6,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument("--input", "-i", type=str, required=True)
 parser.add_argument("--output", "-o", type=str, required=True)
 parser.add_argument("--resolver", "-r", type=str, required=True)
+parser.add_argument("--type", "-t", type=str, required=False)
 args = parser.parse_args()
 
 inputFile = open(args.input, 'r')
@@ -14,7 +15,7 @@ outputFile = open(args.output, 'w')
 for line in inputFile:
     strippedLine = line.strip()
     if args.resolver == "google":
-        data = google(strippedLine, "CNAME")
+        data = google(strippedLine, args.type)
 
         if "Authority" in data:
             print(f"{strippedLine}: No records")
@@ -24,7 +25,7 @@ for line in inputFile:
         else:
             print(f"Unknown response.")
     elif args.resolver == "cloudflare":
-        data = cloudflare(strippedLine, "CNAME")
+        data = cloudflare(strippedLine, args.type)
 
         if "Authority" in data:
             print(f"{strippedLine}: No records")
