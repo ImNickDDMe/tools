@@ -1,5 +1,5 @@
-import dns.resolver
 import argparse
+import client
 
 parser = argparse.ArgumentParser()
 
@@ -11,17 +11,12 @@ inputFile = open(args.input, 'r')
 outputFile = open(args.output, 'w')
 
 for subdomain in inputFile:
-    try:
-        answers = dns.resolver.resolve(subdomain, 'CNAME')
-        for rdata in answers:
-            outputFile.write(f"{subdomain}:{rdata}")
-    except dns.name.EmptyLabel:
+    response = client.query(subdomain, "CNAME")
+
+    if len(response) == 0:
         print(f"{subdomain}: No records.")
-    except dns.resolver.NXDOMAIN:
-        print(f"{subdomain}: No records.")
-    except dns.resolver.NoAnswer:
-        print(f"{subdomain}: No records.")
-    except dns.exception.Timeout:
-        pass
+    else:
+        outputFile.write(f"{subdomain}:{response[0]}")
+        print(f"{subdomain}:{response[0]}")
 
 print('Done.')
