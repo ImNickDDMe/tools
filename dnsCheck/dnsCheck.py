@@ -19,7 +19,7 @@ for line in inputFile:
         if "Authority" in data:
             print(f"{strippedLine}: No records")
         elif "Answer" in data:
-            outputFile.write(f"{strippedLine}:{data['Answer'][0]['data']}")
+            outputFile.write(f"{strippedLine}:{data['Answer'][0]['data']}\n")
             print(f"{strippedLine}:{data['Answer'][0]['data']}")
         else:
             print(f"Unknown response.")
@@ -29,7 +29,7 @@ for line in inputFile:
         if "Authority" in data:
             print(f"{strippedLine}: No records")
         elif "Answer" in data:
-            outputFile.write(f"{strippedLine}:{data['Answer'][0]['data']}")
+            outputFile.write(f"{strippedLine}:{data['Answer'][0]['data']}\n")
             print(f"{strippedLine}:{data['Answer'][0]['data']}")
         else:
             print(f"Unknown response.")
