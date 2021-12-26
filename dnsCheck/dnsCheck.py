@@ -11,27 +11,28 @@ args = parser.parse_args()
 inputFile = open(args.input, 'r')
 outputFile = open(args.output, 'w')
 
-for subdomain in inputFile:
+for line in inputFile:
+    strippedLine = line.strip()
     if args.resolver == "google":
-        data = google(subdomain, "CNAME")
+        data = google(strippedLine, "CNAME")
 
         if "Authority" in data:
-            print(f"{subdomain}: No records")
-        elif "Authority" in data:
-            outputFile.write(f"{subdomain}:{data['Answer'][0]['data']}")
-            print(f"{subdomain}:{data['Answer'][0]['data']}")
-        else:
-            print("Unknown response.")
-    elif args.resolver == "cloudflare":
-        data = cloudflare(subdomain, "CNAME")
-
-        if "Authority" in data:
-            print(f"{subdomain}: No records")
+            print(f"{strippedLine}: No records")
         elif "Answer" in data:
-            outputFile.write(f"{subdomain}:{data['Answer'][0]['data']}")
-            print(f"{subdomain}:{data['Answer'][0]['data']}")
+            outputFile.write(f"{strippedLine}:{data['Answer'][0]['data']}")
+            print(f"{strippedLine}:{data['Answer'][0]['data']}")
         else:
-            print("Unknown response.")
+            print(f"Unknown response.")
+    elif args.resolver == "cloudflare":
+        data = cloudflare(strippedLine, "CNAME")
+
+        if "Authority" in data:
+            print(f"{strippedLine}: No records")
+        elif "Answer" in data:
+            outputFile.write(f"{strippedLine}:{data['Answer'][0]['data']}")
+            print(f"{strippedLine}:{data['Answer'][0]['data']}")
+        else:
+            print(f"Unknown response.")
     else:
         print("Unknown resolver.")
         exit()
